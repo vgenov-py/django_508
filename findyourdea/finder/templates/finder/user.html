@@ -7,13 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-    {%load static %}
-    <link rel="stylesheet" href="{% static '/styles.css' %}" />
-    <title>Find Your DEA</title>
+
+    <title>Document</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success" id="navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success" id="navbar" style="margin-bottom: 2em">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Find Your DEA</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,25 +27,25 @@
             </div>
         </div>
     </nav>
-
-    <main class="container">
-        <ul class="list-group">
-            {%for dea in deas%}
-            <form action="/details" method="POST">
-                {%csrf_token%}
-                <li class="list-group-item">
-                    {%if dea.horario_acceso == ""%}
-                    <strong>Horario no previsto</strong> {%else%}
-                    <strong> {{dea.horario_acceso}} </strong> {%endif%}
-                    <input type="text" name="codigo_dea" value="{{dea.codigo_dea}}" style="display: none" />
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-success">detalle</button>
-                    </div>
-                </li>
-            </form>
-            {%endfor%}
-        </ul>
-    </main>
+    <form action="/" method="POST">
+        {%csrf_token%}
+        <input type="text" name="lat" id="lat" style="display: none" />
+        <input type="text" name="lng" id="lng" style="display: none" />
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-success">Buscar DEA</button>
+        </div>
+    </form>
 </body>
+
+<script>
+    window.navigator.geolocation.getCurrentPosition((position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const lat = document.querySelector("#lat");
+        const lng = document.querySelector("#lng");
+        lat.value = latitude;
+        lng.value = longitude;
+    });
+</script>
 
 </html>

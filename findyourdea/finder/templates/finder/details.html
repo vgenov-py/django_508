@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     {%load static %}
     <link rel="stylesheet" href="{% static '/styles.css' %}" />
-    <title>Find Your DEA</title>
+    <title>{{dea.direccion_ubicacion}}</title>
 </head>
 
 <body>
@@ -28,24 +28,20 @@
             </div>
         </div>
     </nav>
-
     <main class="container">
-        <ul class="list-group">
-            {%for dea in deas%}
-            <form action="/details" method="POST">
-                {%csrf_token%}
-                <li class="list-group-item">
-                    {%if dea.horario_acceso == ""%}
-                    <strong>Horario no previsto</strong> {%else%}
-                    <strong> {{dea.horario_acceso}} </strong> {%endif%}
-                    <input type="text" name="codigo_dea" value="{{dea.codigo_dea}}" style="display: none" />
-                    <div class="d-flex justify-content-end">
-                        <button class="btn btn-success">detalle</button>
+        <div class="d-flex justify-content-center">
+            <div class="card" style="width: 18rem">
+                {%load static%}
+                <img src="{% static '/img/dea.png'%}" class="card-img-top" alt="..." />
+                <div class="card-body">
+                    <h5 class="card-title">{{dea.direccion_via_nombre}}</h5>
+                    <p class="card-text">{{dea.horario_acceso}}</p>
+                    <div class="d-flex justify-content-center">
+                        <a target="_blank" href="{{url}}" class="btn btn-success">Maps</a>
                     </div>
-                </li>
-            </form>
-            {%endfor%}
-        </ul>
+                </div>
+            </div>
+        </div>
     </main>
 </body>
 

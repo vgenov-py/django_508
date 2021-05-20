@@ -57,7 +57,6 @@ def nearest_dea(user_lat, user_long, dataset):
             distance_to_beat = distance
         else:
             continue
-    print(result.y_utm)
 
     dea_latlng = utm.to_latlon(result.x_utm,result.y_utm, 30, "N")
     url = f"https://www.google.com/maps/dir/{user_lat},{user_long}/{dea_latlng[0]},{dea_latlng[1]} "
